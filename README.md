@@ -13,7 +13,7 @@ This repository contains the code and resources for building a chatbot that gene
 
 1. Clone this repository to your local machine:
 
-git clone https://github.com/sohv/sql_chatbot.git
+https://github.com/sohv/sql_chatbot.git
 
 2. Navigate to the cloned directory:
    
