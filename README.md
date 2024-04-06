@@ -43,8 +43,7 @@ The fine-tuned GPT-2 model is saved in the models/ folder. This model is used by
 ## Contributing ##
 Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or create a pull request.
 
-
-Acknowledgments
-This project utilizes the Hugging Face Transformers library.
-Inspiration for this project came from the need for an intelligent SQL query generator.
-Thanks to the open-source community for providing valuable resources and tools.
+## Acknowledgments ##
+*This project utilizes the Hugging Face Transformers library.
+*Inspiration for this project came from the need for an intelligent SQL query generator.
+*Thanks to the open-source community for providing valuable resources and tools.
