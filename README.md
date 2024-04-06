@@ -1,13 +1,13 @@
-** SQL Query Generator Chatbot **
+## SQL Query Generator Chatbot ##
 
 This repository contains the code and resources for building a chatbot that generates SQL queries based on user prompts. We fine-tuned the GPT-2 model on a dataset sourced from the Hugging Face library and trained it using TensorFlow. The fine-tuned model is saved in a designated folder within this repository.
 
 ## Requirements: ##
 
-Python 3.x
-TensorFlow
-Hugging Face Transformers
-Other dependencies as specified in requirements.txt
+* Python 3.x
+* TensorFlow
+* Hugging Face Transformers
+* Other dependencies as specified in requirements.txt
 
 ## Installation: ##
 
@@ -23,20 +23,19 @@ cd sql_chatbot
 
 pip install -r requirements.txt
 
-Usage: 
+## Usage: ##
 Ensure that the fine-tuned GPT-2 model is saved in the designated folder (models/ by default).
 
-Run the chatbot script:
-
-python chatbot.py
+Run the chatbot script:<br>
+python chatbot.py <br>
 The chatbot will prompt you to enter your query requirements. Based on your input, it will generate SQL queries.
 
 ## Training: ##
 If you want to fine-tune the model further or train it from scratch:
 
-Prepare your dataset in the required format.
-Use the provided scripts or adapt them for your dataset.
-Fine-tune the GPT-2 model using TensorFlow.
+*Prepare your dataset in the required format.
+*Use the provided scripts or adapt them for your dataset.
+*Fine-tune the GPT-2 model using TensorFlow.
 
 ## Model ##
 The fine-tuned GPT-2 model is saved in the models/ folder. This model is used by the chatbot to generate SQL queries based on user input.
