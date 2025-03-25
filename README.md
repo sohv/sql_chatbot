@@ -96,29 +96,12 @@ We use the [Spider](https://yale-lily.github.io/spider) dataset for fine-tuning,
   - alpha: 16
   - dropout: 0.05
 
-## Performance Metrics
-
-- SQL Query Accuracy: 91%
-- Query Generation Speed: 40% faster than baseline
-- Memory Usage: ~8GB GPU memory
-
-## Hardware Requirements
-
-- GPU with at least 16GB VRAM (recommended: 24GB+)
-- 32GB+ RAM
-- CUDA-compatible GPU
-
 ## Troubleshooting
 
 1. If you get a 401 Unauthorized error:
    - Ensure you have requested and received access to Llama 3.3
    - Verify your HuggingFace token is correct in the .env file
    - Make sure you've accepted the model's license agreement
-
-2. If you encounter CUDA out of memory errors:
-   - Reduce the batch size in configs/training_config.yaml
-   - Increase gradient_accumulation_steps
-   - Use a smaller model variant
 
 ## Contributing
 
