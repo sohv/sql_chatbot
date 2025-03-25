@@ -1,0 +1,35 @@
+model:
+  base_model: "meta-llama/Llama-3.3-70B-Instruct"
+  model_type: "llama"
+  trust_remote_code: true
+  use_auth_token: true
+  hf_token: "${HUGGINGFACE_TOKEN}"
+
+training:
+  output_dir: "models/sql_chatbot"
+  num_train_epochs: 3
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 8
+  learning_rate: 1e-4
+  warmup_steps: 100
+  logging_steps: 10
+  save_steps: 100
+  eval_steps: 100
+  max_grad_norm: 0.3
+  fp16: true
+  optim: "adamw_torch"
+
+qlora:
+  r: 8
+  lora_alpha: 16
+  lora_dropout: 0.05
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+dataset:
+  train_file: "data/spider/train.json"
+  eval_file: "data/spider/dev.json"
+  max_length: 2048
+  padding: "max_length"
+  truncation: true 
