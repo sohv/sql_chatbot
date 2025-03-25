@@ -31,13 +31,21 @@ def load_config(config_path: str) -> Dict[str, Any]:
 def setup_model_and_tokenizer(config: Dict[str, Any]):
     login(token=config['model']['hf_token'])
     
-    # 4-bit quantization
-    quantization_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_quant_type="nf4"
-    )
+    # Check if CUDA is available
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    print(f"Using device: {device}")
+    
+    # Configure quantization based on device
+    if device == "cuda":
+        quantization_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_compute_dtype=torch.float16,
+            bnb_4bit_use_double_quant=True,
+            bnb_4bit_quant_type="nf4"
+        )
+    else:
+        quantization_config = None
+        print("Warning: Running on CPU. Training will be significantly slower.")
     
     tokenizer = AutoTokenizer.from_pretrained(
         config['model']['base_model'],
@@ -49,12 +57,13 @@ def setup_model_and_tokenizer(config: Dict[str, Any]):
     model = AutoModelForCausalLM.from_pretrained(
         config['model']['base_model'],
         quantization_config=quantization_config,
-        device_map="auto",
+        device_map="auto" if device == "cuda" else None,
         trust_remote_code=config['model']['trust_remote_code'],
         use_auth_token=config['model']['use_auth_token']
     )
 
-    model = prepare_model_for_kbit_training(model)
+    if device == "cuda":
+        model = prepare_model_for_kbit_training(model)
 
     # LoRA configuration
     lora_config = LoraConfig(
@@ -109,6 +118,16 @@ def prepare_dataset(config: Dict[str, Any], tokenizer):
 
 def main():
     config = load_config('configs/training_config.yaml')
+    
+    # Check if CUDA is available
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    
+    # Modify training arguments based on device
+    if device == "cpu":
+        config['training']['fp16'] = False
+        config['training']['per_device_train_batch_size'] = 1
+        config['training']['gradient_accumulation_steps'] = 16
+        print("Warning: Running on CPU. Training will be significantly slower.")
 
     model, tokenizer = setup_model_and_tokenizer(config)
 
