@@ -9,7 +9,6 @@ def load_config(config_path):
         return yaml.safe_load(f)
 
 def setup_model(config):
-    # Load base model and tokenizer
     model = AutoModelForCausalLM.from_pretrained(
         config['model']['base_model'],
         load_in_4bit=True,
@@ -22,7 +21,6 @@ def setup_model(config):
         trust_remote_code=config['model']['trust_remote_code']
     )
     
-    # Load LoRA weights
     model = PeftModel.from_pretrained(model, config['training']['output_dir'])
     
     return model, tokenizer
@@ -46,13 +44,10 @@ def main():
     st.title("SQL Query Generator")
     st.write("Ask a question and get the corresponding SQL query")
     
-    # Load configuration
     config = load_config('configs/training_config.yaml')
     
-    # Setup model
     model, tokenizer = setup_model(config)
     
-    # User input
     question = st.text_input("Enter your question:")
     
     if st.button("Generate SQL"):
